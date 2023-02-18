@@ -61,7 +61,7 @@ function InputForm() {
           type="text"
           value={input1Value}
           onChange={(event) => setInput1Value(event.target.value)}
-          placeholder="Enter text for input1 here"
+          placeholder="Enter the url of video here"
         />
         <button type="submit">Submit1</button>
       </form>
@@ -70,7 +70,7 @@ function InputForm() {
           type="text"
           value={input2Value}
           onChange={(event) => setInput2Value(event.target.value)}
-          placeholder="Enter text for input2 here"
+          placeholder="Enter the keyword here"
         />
         <button type="submit">Submit2</button>
       </form>
