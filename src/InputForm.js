@@ -13,7 +13,7 @@ const transcript_video = async (video_link, setOutputValue) => {
     redirect: 'follow'
   };
 
-  fetch("https://23bf-31-12-82-146.eu.ngrok.io/link", requestOptions)
+  fetch("https://3c4b-31-12-82-146.eu.ngrok.io/link", requestOptions)
     .then(response => response.text())
     .then(result => {
       console.log(result);
@@ -22,22 +22,25 @@ const transcript_video = async (video_link, setOutputValue) => {
     .catch(error => console.log('error', error));
 }
 
-const find_keyword = async (keyword, setOutputValue) => {
+const find_keyword = async (keyword, setOutputValue, setItems) => {
   var formdata = new FormData();
-  formdata.append("keyword", keyword);
-  var requestOptions = {
-    method: 'POST',
-    body: formdata,
-    redirect: 'follow'
-  };
-  
-  fetch("https://23bf-31-12-82-146.eu.ngrok.io/timestamps", requestOptions)
-    .then(response => response.text())
-    .then(result => {
-      console.log(result);
-      setOutputValue(result);
-    })
-    .catch(error => console.log('error', error));
+formdata.append("keyword", keyword);
+formdata.append("number", 15);
+
+var requestOptions = {
+  method: 'POST',
+  body: formdata,
+  redirect: 'follow'
+};
+
+fetch("https://3c4b-31-12-82-146.eu.ngrok.io/timestamps", requestOptions)
+  .then(response => response.json())
+  .then(result => {
+    // console.log(result);
+    
+    setOutputValue(setItems(result));
+  })
+  .catch(error => console.log('error', error));
 }
 
 
@@ -69,23 +72,12 @@ function InputForm() {
   //   }, 3000);
   // }
 
-
   const [selectedItem, setSelectedItem] = useState(null);
-  const items = [
-    ["00:00:00.000", "00:00:09.840"],
-    ["00:00:09.840", "00:00:13.360"],
-    ["00:00:13.360", "00:00:17.840"],
-    ["00:00:13.360", "00:00:17.840"],
-    ["00:00:13.360", "00:00:17.840"],
-  ];
+  const [items, setItems] = useState([]);
 
   const handleSelectItem = (item) => {
-    setSelectedItem(item);
+    setSelectedItem(item[2]);
   };
-
-
-
-
 
 
 
@@ -101,7 +93,7 @@ function InputForm() {
 
   const handleInput2Submit = (event) => {
     event.preventDefault();
-    find_keyword(input2Value, setOutputValue);
+    find_keyword(input2Value, setOutputValue, setItems);
   };
 
   return (
@@ -126,19 +118,19 @@ function InputForm() {
         <button type="submit">Submit2</button>
         {/* {isLoading && <LoadingAnimation />} */}
       </form>
-      <div className="output-box">{outputValue}
+      <div className="output-box">
       
-      <p>{selectedItem ? selectedItem : 'No item selected'}</p>
+      <p>{selectedItem ? selectedItem : outputValue}</p>
       </div>
 
 
       <div className="container">
       <div className="dropdown">
-        <button className="dropbtn">Select Item</button>
+        <button className="dropbtn">Intervals</button>
         <div className="dropdown-content">
           {items.map((item, index) => (
             <a key={index} onClick={() => handleSelectItem(item)}>
-              {item}
+              {item[0].slice(0,8)} - {item[1].slice(0,8)}
             </a>
           ))}
         </div>
