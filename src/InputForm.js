@@ -13,7 +13,7 @@ const transcript_video = async (video_link, setOutputValue) => {
     redirect: 'follow'
   };
 
-  fetch("https://3c4b-31-12-82-146.eu.ngrok.io/link", requestOptions)
+  fetch("https://acad-142-112-39-215.ngrok.io//link", requestOptions)
     .then(response => response.text())
     .then(result => {
       console.log(result);
@@ -24,37 +24,27 @@ const transcript_video = async (video_link, setOutputValue) => {
 
 const find_keyword = async (keyword, setOutputValue, setItems) => {
   var formdata = new FormData();
-formdata.append("keyword", keyword);
-formdata.append("number", 15);
+  formdata.append("keyword", keyword);
+  formdata.append("number", 15);
 
-var requestOptions = {
-  method: 'POST',
-  body: formdata,
-  redirect: 'follow'
-};
+  var requestOptions = {
+    method: 'POST',
+    body: formdata,
+    redirect: 'follow'
+  };
 
-fetch("https://3c4b-31-12-82-146.eu.ngrok.io/timestamps", requestOptions)
-  .then(response => response.json())
-  .then(result => {
-    // console.log(result);
-    
-    setOutputValue(setItems(result));
-  })
-  .catch(error => console.log('error', error));
+  fetch("https://acad-142-112-39-215.ngrok.io//timestamps", requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      // console.log(result);
+      setOutputValue(result);
+      setItems(result);
+      console.log(JSON.stringify(result));
+    })
+    .catch(error => console.log('error', error));
 }
 
 
-
-const students = [
-  ["00:00:00.000", "00:00:09.840"],
-  ["00:00:09.840", "00:00:13.360"],
-  ["00:00:13.360", "00:00:17.840"],
-  ["00:00:13.360", "00:00:17.840"],
-  ["00:00:13.360", "00:00:17.840"],
-  ["00:00:13.360", "00:00:17.840"],
-  ["00:00:13.360", "00:00:17.840"],
-  ["00:00:13.360", "00:00:17.840"],
-];
 
 
 
@@ -83,11 +73,12 @@ function InputForm() {
 
   const [input1Value, setInput1Value] = useState('');
   const [input2Value, setInput2Value] = useState('');
-  const [outputValue, setOutputValue] = useState('');
+  const [outputValue, setOutputValue] = useState([]);
 
   const handleInput1Submit = (event) => {
     event.preventDefault();
-    transcript_video(input1Value, setOutputValue);
+    // transcript_video(input1Value, setOutputValue);
+    console.log(input1Value);
     // handle input1 form submit here
   };
 
@@ -113,29 +104,31 @@ function InputForm() {
           type="text"
           value={input2Value}
           onChange={(event) => setInput2Value(event.target.value)}
-          placeholder="Enter the keyword here"
+          placeholder="Search for a topic"
         />
         <button type="submit">Submit2</button>
         {/* {isLoading && <LoadingAnimation />} */}
       </form>
-      <div className="output-box">
-      
-      <p>{selectedItem ? selectedItem : outputValue}</p>
-      </div>
+      <div className="output-box" style={{ width: "900px", height: "500px" }}>
+  <ul>
+    {outputValue.map((item, index) => (
+      <li key={index}>
+        <p>
+          <strong>Filename: </strong> {item.filename}
+        </p>
+        {item.longest_interval && (
+          <p>
+            <strong>Start: </strong> {item.longest_interval.start} <br />
+            <strong>End: </strong> {item.longest_interval.end} <br /> <br/>
+            <strong>Transcript: </strong> {item.longest_interval.text} <br />
+          </p>
+        )}
+      </li>
+    ))}
+  </ul>
+</div>
 
 
-      <div className="container">
-      <div className="dropdown">
-        <button className="dropbtn">Intervals</button>
-        <div className="dropdown-content">
-          {items.map((item, index) => (
-            <a key={index} onClick={() => handleSelectItem(item)}>
-              {item[0].slice(0,8)} - {item[1].slice(0,8)}
-            </a>
-          ))}
-        </div>
-      </div>
-      </div>
     </div>
   );
 }
