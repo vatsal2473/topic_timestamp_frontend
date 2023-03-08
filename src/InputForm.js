@@ -3,21 +3,24 @@ import './InputForm.css';
 // import LoadingAnimation from './LoadingAnimation';
 // import Background from './Background';
 
-const transcript_video = async (video_link, setOutputValue) => {
+import Loader from './reusedElements/Loader';
+
+const transcript_video = async (video_link, setOutputValue, setLoading) => {
   var formdata = new FormData();
   formdata.append("link", video_link);
-
   var requestOptions = {
     method: 'POST',
     body: formdata,
     redirect: 'follow'
   };
 
-  fetch("https://acad-142-112-39-215.ngrok.io//link", requestOptions)
+  setLoading(true);
+  fetch("https://9719-103-93-197-50.ngrok.io//link", requestOptions)
     .then(response => response.text())
     .then(result => {
       console.log(result);
-      setOutputValue(result);
+      setLoading(false);
+      // setOutputValue(result);
     })
     .catch(error => console.log('error', error));
 }
@@ -33,7 +36,7 @@ const find_keyword = async (keyword, setOutputValue, setItems) => {
     redirect: 'follow'
   };
 
-  fetch("https://acad-142-112-39-215.ngrok.io//timestamps", requestOptions)
+  fetch("https://9719-103-93-197-50.ngrok.io//timestamps", requestOptions)
     .then(response => response.json())
     .then(result => {
       // console.log(result);
@@ -61,7 +64,7 @@ function InputForm() {
   //     setIsLoading(false);
   //   }, 3000);
   // }
-
+  const [loading, setLoading] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [items, setItems] = useState([]);
 
@@ -77,7 +80,7 @@ function InputForm() {
 
   const handleInput1Submit = (event) => {
     event.preventDefault();
-    // transcript_video(input1Value, setOutputValue);
+    transcript_video(input1Value, setOutputValue, setLoading);
     console.log(input1Value);
     // handle input1 form submit here
   };
@@ -90,6 +93,7 @@ function InputForm() {
   return (
     <div className="input-form">
       {/* <Background /> */}
+      <Loader state={loading} />
       <form onSubmit={handleInput1Submit}>
         <input
           type="text"
