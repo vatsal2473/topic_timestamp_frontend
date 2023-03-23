@@ -1,14 +1,16 @@
 import React from 'react';
 import InputForm from './InputForm';
-import Bg from './Bg';
 import "./styles.css";
+import Navbar from './components/Navbar';
+import './App.css';
 
 
 function App() {
   return (
-    <div>
+    <div className='bg-color'>
+      <Navbar />
       <InputForm />
-      {/* <Bg /> */}
+      
     </div>
   );
 }
