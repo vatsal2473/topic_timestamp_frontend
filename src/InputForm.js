@@ -101,7 +101,7 @@ function InputForm() {
           onChange={(event) => setInput1Value(event.target.value)}
           placeholder="Enter the url of video here"
         />
-        <button type="submit">Submit1</button>
+        <button className='submit1' type="submit">Submit1</button>
       </form>
       <form onSubmit={handleInput2Submit}>
         <input

@@ -9,7 +9,9 @@ const Navbar = () => {
         <img src={favicon} alt="logo" className="navbar-logo" />
       </div>
       <div className="navbar-right">
+      <a href='https://scribe-vd.vercel.app/'>
         <button className="navbar-back-button">Back</button>
+        </a>
       </div>
     </nav>
   );
