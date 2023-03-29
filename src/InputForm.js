@@ -15,7 +15,7 @@ const transcript_video = async (video_link, setOutputValue, setLoading) => {
   };
 
   setLoading(true);
-  fetch("https://4eeb-45-153-35-178.eu.ngrok.io//link", requestOptions)
+  fetch("https://2860-45-153-35-178.au.ngrok.io//link", requestOptions)
     .then(response => response.text())
     .then(result => {
       // console.log(result);
@@ -36,7 +36,7 @@ const find_keyword = async (keyword, setOutputValue, setItems) => {
     redirect: 'follow'
   };
 
-  fetch("https://4eeb-45-153-35-178.eu.ngrok.io//timestamps", requestOptions)
+  fetch("https://2860-45-153-35-178.au.ngrok.io//timestamps", requestOptions)
     .then(response => response.json())
     .then(result => {
       // console.log(result);
