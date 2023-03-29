@@ -15,10 +15,10 @@ const transcript_video = async (video_link, setOutputValue, setLoading) => {
   };
 
   setLoading(true);
-  fetch("https://e9d5-45-153-35-178.eu.ngrok.io//link", requestOptions)
+  fetch("https://4eeb-45-153-35-178.eu.ngrok.io//link", requestOptions)
     .then(response => response.text())
     .then(result => {
-      console.log(result);
+      // console.log(result);
       setLoading(false);
       // setOutputValue(result);
     })
@@ -36,13 +36,13 @@ const find_keyword = async (keyword, setOutputValue, setItems) => {
     redirect: 'follow'
   };
 
-  fetch("https://e9d5-45-153-35-178.eu.ngrok.io//timestamps", requestOptions)
+  fetch("https://4eeb-45-153-35-178.eu.ngrok.io//timestamps", requestOptions)
     .then(response => response.json())
     .then(result => {
       // console.log(result);
       setOutputValue(result);
       setItems(result);
-      console.log(JSON.stringify(result));
+      // console.log(JSON.stringify(result));
     })
     .catch(error => console.log('error', error));
 }
@@ -81,7 +81,7 @@ function InputForm() {
   const handleInput1Submit = (event) => {
     event.preventDefault();
     transcript_video(input1Value, setOutputValue, setLoading);
-    console.log(input1Value);
+    // console.log(input1Value);
     // handle input1 form submit here
   };
 
